@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - SCHWINDAL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar will be loaded here -->
+
+    <!-- Contact Hero Section -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1 class="page-title">Get in Touch</h1>
+            <p class="page-subtitle">We'd love to hear from you</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact-section">
+        <div class="container">
+            <div class="contact-layout">
+                <div class="contact-info">
+                    <h2 class="contact-heading">Contact Information</h2>
+                    <p class="contact-description">
+                        Have a question or need assistance? Reach out to us through any of the following channels.
+                    </p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-text">
+                                <h3>Email</h3>
+                                <p>info@schwindal.com</p>
+                                <p>support@schwindal.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <div class="contact-text">
+                                <h3>Phone</h3>
+                                <p>+91 96247 35860</p>
+                                <p>Mon-Sat: 9 AM - 6 PM IST</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-text">
+                                <h3>Address</h3>
+                                <p>SCHWINDAL Beauty Products</p>
+                                <p>India</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="social-contact">
+                        <h3>Follow Us</h3>
+                        <div class="social-links">
+                            <a href="#" class="social-link">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-container">
+                    <h2 class="contact-heading">Send us a Message</h2>
+                    <div class="form-status" id="contactStatus"></div>
+                    <form class="contact-form" action="https://formsubmit.co/schwindal.official@gmail.com" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="phone" class="form-input">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" class="form-input form-textarea" rows="5" required></textarea>
+                        </div>
+
+                        <!-- FormSubmit configuration -->
+                        <input type="hidden" name="_subject" value="New SCHWINDAL website contact message">
+                        <input type="hidden" name="_captcha" value="false">
+
+                        <button type="submit" class="btn btn-primary btn-submit">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer will be loaded here -->
+
+    <script src="components/loader.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
