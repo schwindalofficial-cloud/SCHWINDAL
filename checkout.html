@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCHWINDAL | Checkout</title>
+    <meta name="description" content="Complete your SCHWINDAL order securely. Review your cart, apply coupons, and place your order.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ── Checkout Page Styles ── */
+        .checkout-hero {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0d0d0d 100%);
+            padding: 120px 0 60px;
+            text-align: center;
+            border-bottom: 1px solid rgba(200,160,90,0.15);
+        }
+        .checkout-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .checkout-hero h1 span { color: #c8a05a; }
+        .checkout-hero p { color: rgba(255,255,255,0.5); font-size: 0.95rem; font-family: 'Montserrat', sans-serif; }
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 32px;
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 0 24px;
+        }
+        @media (max-width: 860px) {
+            .checkout-layout { grid-template-columns: 1fr; }
+        }
+
+        /* ── Cards ── */
+        .co-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(200,160,90,0.18);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(6px);
+        }
+        .co-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #c8a05a;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .co-card h2 i { font-size: 1rem; }
+
+        /* ── Product Builder ── */
+        .product-builder { display: flex; flex-direction: column; gap: 14px; }
+        .product-row {
+            display: grid;
+            grid-template-columns: 1fr 80px 36px;
+            gap: 10px;
+            align-items: center;
+        }
+        .product-row select,
+        .product-row input[type="number"] {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(200,160,90,0.25);
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.88rem;
+            padding: 10px 12px;
+            outline: none;
+            transition: border-color .25s;
+        }
+        .product-row select:focus,
+        .product-row input[type="number"]:focus { border-color: #c8a05a; }
+        .product-row input[type="number"] { text-align: center; }
+        .btn-remove {
+            background: rgba(220,50,50,0.15);
+            border: 1px solid rgba(220,50,50,0.3);
+            border-radius: 8px;
+            color: #e05555;
+            cursor: pointer;
+            font-size: 0.9rem;
+            height: 38px;
+            transition: background .2s;
+        }
+        .btn-remove:hover { background: rgba(220,50,50,0.3); }
+
+        .btn-add-product {
+            background: transparent;
+            border: 1px dashed rgba(200,160,90,0.4);
+            border-radius: 8px;
+            color: #c8a05a;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.88rem;
+            padding: 10px;
+            width: 100%;
+            transition: background .2s;
+            margin-top: 6px;
+        }
+        .btn-add-product:hover { background: rgba(200,160,90,0.08); }
+
+        /* ── Coupon ── */
+        .coupon-row { display: flex; gap: 10px; }
+        .coupon-row input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(200,160,90,0.25);
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            padding: 11px 14px;
+            outline: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: border-color .25s;
+        }
+        .coupon-row input:focus { border-color: #c8a05a; }
+        .btn-apply {
+            background: rgba(200,160,90,0.12);
+            border: 1px solid rgba(200,160,90,0.4);
+            border-radius: 8px;
+            color: #c8a05a;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 600;
+            padding: 11px 20px;
+            transition: background .2s, transform .15s;
+            white-space: nowrap;
+        }
+        .btn-apply:hover { background: rgba(200,160,90,0.22); transform: translateY(-1px); }
+        .coupon-status {
+            margin-top: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            min-height: 20px;
+            transition: all .3s;
+        }
+        .coupon-status.valid { color: #4cbb7f; }
+        .coupon-status.invalid { color: #e05555; }
+
+        /* ── Order Summary ── */
+        .summary-card { position: sticky; top: 100px; }
+        .summary-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .summary-line:last-of-type { border-bottom: none; }
+        .summary-line strong { color: #fff; }
+        .summary-line.total {
+            font-size: 1.1rem;
+            color: #fff;
+            font-weight: 600;
+            padding-top: 14px;
+            margin-top: 4px;
+            border-top: 1px solid rgba(200,160,90,0.3);
+        }
+        .summary-line.total span { color: #c8a05a; font-size: 1.25rem; }
+        .summary-line.discount span { color: #4cbb7f; }
+
+        .summary-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-bottom: 16px;
+        }
+        .summary-empty {
+            text-align: center;
+            color: rgba(255,255,255,0.3);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.88rem;
+            padding: 20px 0;
+        }
+
+        /* ── Checkout Button ── */
+        .btn-checkout {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #c8a05a, #e0bc7a);
+            border: none;
+            border-radius: 10px;
+            color: #0a0a0a;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 16px;
+            margin-top: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: transform .2s, box-shadow .2s;
+            text-decoration: none;
+        }
+        .btn-checkout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(200,160,90,0.35);
+        }
+        .btn-checkout:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* ── Order Confirmation Panel ── */
+        #checkoutResult {
+            display: none;
+            background: rgba(76,187,127,0.06);
+            border: 1px solid rgba(76,187,127,0.25);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-top: 24px;
+            animation: fadeSlideUp .4s ease both;
+        }
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .confirm-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+        .confirm-icon {
+            width: 48px; height: 48px;
+            background: rgba(76,187,127,0.15);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; color: #4cbb7f; flex-shrink: 0;
+        }
+        .confirm-header h3 {
+            font-family: 'Playfair Display', serif;
+            color: #fff;
+            font-size: 1.25rem;
+            margin: 0 0 4px;
+        }
+        .confirm-header p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.4);
+            margin: 0;
+        }
+        .confirm-items { display: flex; flex-direction: column; gap: 0; margin-bottom: 18px; }
+        .confirm-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.75);
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .confirm-item:last-child { border-bottom: none; }
+        .confirm-item .ci-name { display: flex; align-items: center; gap: 8px; }
+        .ci-qty-badge {
+            background: rgba(200,160,90,0.15);
+            border: 1px solid rgba(200,160,90,0.3);
+            border-radius: 4px;
+            color: #c8a05a;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 2px 7px;
+        }
+        .confirm-item strong { color: #fff; }
+        .confirm-divider { border: none; border-top: 1px solid rgba(200,160,90,0.2); margin: 16px 0; }
+        .confirm-coupon {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            color: #4cbb7f;
+            margin-bottom: 8px;
+        }
+        .confirm-coupon i { font-size: 0.9rem; }
+        .confirm-no-coupon {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 8px;
+        }
+        .confirm-total-row {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-top: 8px;
+        }
+        .confirm-total-row span:last-child { color: #c8a05a; font-size: 1.15rem; }
+        .confirm-actions { margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn-amazon {
+            flex: 1;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: linear-gradient(135deg, #c8a05a, #e0bc7a);
+            border: none; border-radius: 10px;
+            color: #0a0a0a; cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem; font-weight: 700;
+            letter-spacing: 0.06em; padding: 14px;
+            text-decoration: none; text-transform: uppercase;
+            transition: transform .2s, box-shadow .2s;
+        }
+        .btn-amazon:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,160,90,0.3); }
+        .btn-new-order {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            color: rgba(255,255,255,0.6);
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem; padding: 14px 20px;
+            transition: background .2s;
+        }
+        .btn-new-order:hover { background: rgba(255,255,255,0.1); }
+
+        /* ── Trust strip ── */
+        .checkout-trust {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            flex-wrap: wrap;
+            padding: 20px 24px 60px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.4);
+        }
+        .trust-item i { color: #c8a05a; }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div id="navbar-placeholder"></div>
+
+    <!-- Hero -->
+    <section class="checkout-hero">
+        <div class="container">
+            <h1>Your <span>Checkout</span></h1>
+            <p>Review your order, apply a coupon, and proceed securely.</p>
+        </div>
+    </section>
+
+    <!-- Main Layout -->
+    <div class="checkout-layout">
+
+        <!-- LEFT: Cart Builder + Coupon -->
+        <div>
+            <!-- Product Selection -->
+            <div class="co-card">
+                <h2><i class="fas fa-shopping-bag"></i> Your Cart</h2>
+                <div class="product-builder" id="productBuilder">
+                    <!-- Rows injected by JS -->
+                </div>
+                <button class="btn-add-product" id="btnAddProduct">
+                    <i class="fas fa-plus"></i> &nbsp;Add Another Product
+                </button>
+            </div>
+
+            <!-- Coupon -->
+            <div class="co-card">
+                <h2><i class="fas fa-tag"></i> Coupon Code</h2>
+                <div class="coupon-row">
+                    <input type="text" id="couponInput" placeholder="Enter coupon (e.g. SAVE10)" maxlength="20">
+                    <button class="btn-apply" id="btnApplyCoupon">Apply</button>
+                </div>
+                <div class="coupon-status" id="couponStatus"></div>
+            </div>
+
+            <!-- Order Confirmation Panel (user-facing) -->
+            <div id="checkoutResult">
+                <div class="confirm-header">
+                    <div class="confirm-icon"><i class="fas fa-check"></i></div>
+                    <div>
+                        <h3>Order Placed Successfully!</h3>
+                        <p>Thank you for choosing SCHWINDAL. Here's your order summary.</p>
+                    </div>
+                </div>
+                <div class="confirm-items" id="confirmItems"></div>
+                <hr class="confirm-divider">
+                <div id="confirmCoupon"></div>
+                <div class="confirm-total-row">
+                    <span>Total Payable</span>
+                    <span id="confirmTotal">₹0</span>
+                </div>
+                <div class="confirm-actions">
+                    <a href="https://amzn.to/4qSyfJk" target="_blank" rel="noopener noreferrer" class="btn-amazon">
+                        <i class="fab fa-amazon"></i> Complete on Amazon
+                    </a>
+                    <button class="btn-new-order" id="btnNewOrder">
+                        <i class="fas fa-redo"></i> New Order
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: Order Summary -->
+        <div>
+            <div class="co-card summary-card">
+                <h2><i class="fas fa-receipt"></i> Order Summary</h2>
+                <div class="summary-items" id="summaryItems">
+                    <div class="summary-empty" id="summaryEmpty">No items added yet.</div>
+                </div>
+                <div id="summaryTotals" style="display:none;">
+                    <div class="summary-line">
+                        <span>Subtotal</span>
+                        <strong id="subtotalDisplay">₹0</strong>
+                    </div>
+                    <div class="summary-line discount" id="discountLine" style="display:none;">
+                        <span>Coupon Discount</span>
+                        <span id="discountDisplay">-₹0</span>
+                    </div>
+                    <div class="summary-line">
+                        <span>Shipping</span>
+                        <strong style="color:#4cbb7f;">FREE</strong>
+                    </div>
+                    <div class="summary-line total">
+                        <span>Total</span>
+                        <span id="totalDisplay">₹0</span>
+                    </div>
+                </div>
+                <button class="btn-checkout" id="btnCheckout" disabled>
+                    <i class="fas fa-lock"></i> &nbsp;Place Order
+                </button>
+                <p style="text-align:center; color:rgba(255,255,255,0.3); font-family:'Montserrat',sans-serif; font-size:0.78rem; margin-top:12px;">
+                    <i class="fas fa-shield-alt"></i> Secured by 256-bit SSL
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trust Strip -->
+    <div class="checkout-trust">
+        <div class="trust-item"><i class="fas fa-undo"></i> 7-Day Easy Returns</div>
+        <div class="trust-item"><i class="fas fa-shipping-fast"></i> Free Shipping India Wide</div>
+        <div class="trust-item"><i class="fas fa-money-bill-wave"></i> Cash on Delivery</div>
+        <div class="trust-item"><i class="fas fa-headset"></i> 24/7 Support</div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script src="components/loader.js"></script>
+    <script>
+        // ─────────────────────────────────────────────
+        // PRODUCT CATALOGUE  (extend as needed)
+        // ─────────────────────────────────────────────
+        const CATALOGUE = {
+            "SCHWINDAL-200ML": { name: "SCHWINDAL Spray 200ml", price: 599 },
+            "SCHWINDAL-400ML": { name: "SCHWINDAL Spray 400ml", price: 999 },
+            "SCHWINDAL-BUNDLE": { name: "SCHWINDAL Bundle (x3)", price: 1499 },
+        };
+
+        // ─────────────────────────────────────────────
+        // VALID COUPONS  (mirrors server-side map)
+        // ─────────────────────────────────────────────
+        const COUPONS = {
+            "SAVE10":  { type: "percent", value: 10,  label: "10% off" },
+            "FLAT100": { type: "flat",    value: 100, label: "₹100 off" },
+            "WELCOME": { type: "percent", value: 15,  label: "15% off" },
+        };
+
+        // ─────────────────────────────────────────────
+        // STATE
+        // ─────────────────────────────────────────────
+        let appliedCoupon = null;   // null | { code, type, value, label }
+        let rows = [];              // [{ id, qty }]
+
+        // ─────────────────────────────────────────────
+        // CHECKOUT LOGIC  (mirrors CheckoutController)
+        // Replicates:  Map<String,Integer> productQuantities
+        //              result.put("products", productQuantities)
+        //              result.put("coupon", coupon != null ? coupon : "No coupon applied")
+        // ─────────────────────────────────────────────
+        function runCheckout() {
+            // ── Mirror CheckoutController logic ──
+            // productQuantities: Map<String, Integer>
+            const productQuantities = {};
+            rows.forEach(r => {
+                if (r.id && r.qty > 0)
+                    productQuantities[r.id] = (productQuantities[r.id] || 0) + r.qty;
+            });
+            if (!Object.keys(productQuantities).length) return;
+
+            const couponCode = appliedCoupon ? appliedCoupon.code : null;
+            // result.put("coupon", coupon != null ? coupon : "No coupon applied")
+            const couponLabel = couponCode !== null ? couponCode : "No coupon applied";
+
+            // ── Render user-friendly confirmation ──
+            const confirmItems = document.getElementById("confirmItems");
+            confirmItems.innerHTML = "";
+            let subtotal = 0;
+            Object.entries(productQuantities).forEach(([pid, qty]) => {
+                const item = CATALOGUE[pid];
+                if (!item) return;
+                const sub = item.price * qty;
+                subtotal += sub;
+                confirmItems.innerHTML += `
+                    <div class="confirm-item">
+                        <div class="ci-name">
+                            <span class="ci-qty-badge">×${qty}</span>
+                            <span>${item.name}</span>
+                        </div>
+                        <strong>₹${sub.toLocaleString('en-IN')}</strong>
+                    </div>`;
+            });
+
+            // Coupon display
+            let discount = 0;
+            const couponEl = document.getElementById("confirmCoupon");
+            if (appliedCoupon) {
+                discount = appliedCoupon.type === "percent"
+                    ? Math.round(subtotal * appliedCoupon.value / 100)
+                    : Math.min(appliedCoupon.value, subtotal);
+                couponEl.innerHTML = `
+                    <div class="confirm-coupon">
+                        <i class="fas fa-tag"></i>
+                        Coupon <strong style="margin:0 4px;">${couponLabel}</strong> applied
+                        &mdash; you saved ₹${discount.toLocaleString('en-IN')}!
+                    </div>`;
+            } else {
+                couponEl.innerHTML = `<div class="confirm-no-coupon"><i class="fas fa-tag"></i> No coupon applied.</div>`;
+            }
+
+            document.getElementById("confirmTotal").textContent =
+                "₹" + (subtotal - discount).toLocaleString('en-IN');
+
+            const panel = document.getElementById("checkoutResult");
+            panel.style.display = "block";
+        }
+
+        // ─────────────────────────────────────────────
+        // BUILD A PRODUCT ROW
+        // ─────────────────────────────────────────────
+        function createProductRow() {
+            const idx = rows.length;
+            rows.push({ id: Object.keys(CATALOGUE)[0], qty: 1 });
+
+            const div = document.createElement("div");
+            div.className = "product-row";
+            div.dataset.idx = idx;
+
+            // Select
+            const sel = document.createElement("select");
+            Object.entries(CATALOGUE).forEach(([pid, item]) => {
+                const opt = document.createElement("option");
+                opt.value = pid;
+                opt.textContent = item.name + " — ₹" + item.price;
+                sel.appendChild(opt);
+            });
+            sel.value = rows[idx].id;
+            sel.addEventListener("change", () => { rows[idx].id = sel.value; refreshSummary(); });
+
+            // Qty
+            const qty = document.createElement("input");
+            qty.type = "number";
+            qty.min = 1;
+            qty.max = 20;
+            qty.value = 1;
+            qty.addEventListener("input", () => {
+                rows[idx].qty = Math.max(1, parseInt(qty.value) || 1);
+                qty.value = rows[idx].qty;
+                refreshSummary();
+            });
+
+            // Remove
+            const rm = document.createElement("button");
+            rm.className = "btn-remove";
+            rm.innerHTML = '<i class="fas fa-times"></i>';
+            rm.title = "Remove";
+            rm.addEventListener("click", () => {
+                rows.splice(idx, 1);
+                div.remove();
+                // Re-index remaining rows
+                document.querySelectorAll(".product-row").forEach((el, i) => { el.dataset.idx = i; });
+                refreshSummary();
+            });
+
+            div.appendChild(sel);
+            div.appendChild(qty);
+            div.appendChild(rm);
+            document.getElementById("productBuilder").appendChild(div);
+            refreshSummary();
+        }
+
+        // ─────────────────────────────────────────────
+        // REFRESH ORDER SUMMARY SIDEBAR
+        // ─────────────────────────────────────────────
+        function refreshSummary() {
+            // Rebuild rows array from DOM (handles removals correctly)
+            rows = [];
+            document.querySelectorAll(".product-row").forEach(el => {
+                const sel = el.querySelector("select");
+                const qty = el.querySelector("input[type='number']");
+                if (sel && qty) rows.push({ id: sel.value, qty: parseInt(qty.value) || 1 });
+            });
+
+            const summaryItems = document.getElementById("summaryItems");
+            const summaryEmpty = document.getElementById("summaryEmpty");
+            const summaryTotals = document.getElementById("summaryTotals");
+            const btnCheckout = document.getElementById("btnCheckout");
+
+            // Aggregate
+            const agg = {};
+            rows.forEach(r => {
+                if (!r.id || r.qty < 1) return;
+                agg[r.id] = (agg[r.id] || 0) + r.qty;
+            });
+
+            const hasItems = Object.keys(agg).length > 0;
+
+            // Render summary lines
+            summaryItems.innerHTML = "";
+            let subtotal = 0;
+            if (hasItems) {
+                summaryEmpty && summaryEmpty.remove();
+                Object.entries(agg).forEach(([pid, qty]) => {
+                    const item = CATALOGUE[pid];
+                    if (!item) return;
+                    const sub = item.price * qty;
+                    subtotal += sub;
+                    const line = document.createElement("div");
+                    line.className = "summary-line";
+                    line.innerHTML = `<span>${item.name} ×${qty}</span><strong>₹${sub.toLocaleString('en-IN')}</strong>`;
+                    summaryItems.appendChild(line);
+                });
+            } else {
+                const empty = document.createElement("div");
+                empty.className = "summary-empty";
+                empty.id = "summaryEmpty";
+                empty.textContent = "No items added yet.";
+                summaryItems.appendChild(empty);
+            }
+
+            summaryTotals.style.display = hasItems ? "block" : "none";
+            btnCheckout.disabled = !hasItems;
+
+            // Discount
+            let discount = 0;
+            if (appliedCoupon && hasItems) {
+                if (appliedCoupon.type === "percent") {
+                    discount = Math.round(subtotal * appliedCoupon.value / 100);
+                } else {
+                    discount = Math.min(appliedCoupon.value, subtotal);
+                }
+            }
+            const discountLine = document.getElementById("discountLine");
+            discountLine.style.display = discount > 0 ? "flex" : "none";
+            document.getElementById("discountDisplay").textContent = "-₹" + discount.toLocaleString('en-IN');
+            document.getElementById("subtotalDisplay").textContent = "₹" + subtotal.toLocaleString('en-IN');
+            document.getElementById("totalDisplay").textContent = "₹" + (subtotal - discount).toLocaleString('en-IN');
+        }
+
+        // ─────────────────────────────────────────────
+        // COUPON LOGIC
+        // ─────────────────────────────────────────────
+        document.getElementById("btnApplyCoupon").addEventListener("click", () => {
+            const code = document.getElementById("couponInput").value.trim().toUpperCase();
+            const statusEl = document.getElementById("couponStatus");
+
+            if (!code) {
+                appliedCoupon = null;
+                statusEl.className = "coupon-status";
+                statusEl.textContent = "";
+                refreshSummary();
+                return;
+            }
+
+            if (COUPONS[code]) {
+                appliedCoupon = { code, ...COUPONS[code] };
+                statusEl.className = "coupon-status valid";
+                statusEl.innerHTML = `<i class="fas fa-check-circle"></i> Coupon "${code}" applied — ${COUPONS[code].label}!`;
+            } else {
+                appliedCoupon = null;
+                statusEl.className = "coupon-status invalid";
+                statusEl.innerHTML = `<i class="fas fa-times-circle"></i> Invalid coupon code.`;
+            }
+            refreshSummary();
+        });
+
+        // ─────────────────────────────────────────────
+        // PLACE ORDER BUTTON  → runs checkout()
+        // ─────────────────────────────────────────────
+        document.getElementById("btnCheckout").addEventListener("click", () => {
+            runCheckout();
+            setTimeout(() => {
+                document.getElementById("checkoutResult").scrollIntoView({ behavior: "smooth", block: "start" });
+            }, 50);
+        });
+
+        // New Order — reset the page
+        document.addEventListener("click", e => {
+            if (e.target.closest("#btnNewOrder")) {
+                document.getElementById("checkoutResult").style.display = "none";
+                document.getElementById("productBuilder").innerHTML = "";
+                document.getElementById("couponInput").value = "";
+                document.getElementById("couponStatus").textContent = "";
+                appliedCoupon = null;
+                rows = [];
+                createProductRow();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+        });
+
+        // ─────────────────────────────────────────────
+        // ADD PRODUCT BUTTON
+        // ─────────────────────────────────────────────
+        document.getElementById("btnAddProduct").addEventListener("click", createProductRow);
+
+        // ─────────────────────────────────────────────
+        // INIT — add first row on page load
+        // ─────────────────────────────────────────────
+        createProductRow();
+    </script>
+</body>
+</html>

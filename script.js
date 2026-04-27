@@ -1,8 +1,8 @@
 // Hero Section Animation
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const bottleContainer = document.getElementById('bottleContainer');
     const productDetails = document.getElementById('productDetails');
-    
+
     // Show bottle centered for 1 second, then animate both simultaneously
     setTimeout(() => {
         // Both animations start at the same time
@@ -25,13 +25,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Buy Now button functionality (only buttons marked as .btn-buy)
-document.querySelectorAll('.btn-buy').forEach(btn => {
-    btn.addEventListener('click', function() {
-        alert('Redirecting to checkout...');
-        // Add your checkout functionality here
-    });
-});
+// Buy Now buttons are now standard links to Amazon
 
 // Timeline Scroll Animation
 const timelineItems = document.querySelectorAll('.timeline-item');
@@ -41,7 +35,7 @@ const observerOptions = {
     rootMargin: '0px 0px -100px 0px'
 };
 
-const timelineObserver = new IntersectionObserver(function(entries) {
+const timelineObserver = new IntersectionObserver(function (entries) {
     entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
             setTimeout(() => {
@@ -58,15 +52,15 @@ timelineItems.forEach(item => {
 
 // FAQ Accordion
 document.querySelectorAll('.faq-question').forEach(question => {
-    question.addEventListener('click', function() {
+    question.addEventListener('click', function () {
         const faqItem = this.parentElement;
         const isActive = faqItem.classList.contains('active');
-        
+
         // Close all FAQ items
         document.querySelectorAll('.faq-item').forEach(item => {
             item.classList.remove('active');
         });
-        
+
         // Open clicked item if it wasn't active
         if (!isActive) {
             faqItem.classList.add('active');
@@ -77,7 +71,7 @@ document.querySelectorAll('.faq-question').forEach(question => {
 // Newsletter Form and Contact Form handlers are initialized in components/loader.js after footer loads
 
 // Parallax effect for hero background
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     const scrolled = window.pageYOffset;
     const hero = document.querySelector('.hero');
     if (hero && scrolled < window.innerHeight) {
@@ -86,4 +80,19 @@ window.addEventListener('scroll', function() {
 });
 
 // Mobile Menu Toggle is handled in components/loader.js
+
+// Scroll Reveal Observer
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('reveal-active');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.section-title, .product-layout, .faq-item, .contact-layout').forEach(el => {
+    el.classList.add('reveal-hidden');
+    revealObserver.observe(el);
+});
 
