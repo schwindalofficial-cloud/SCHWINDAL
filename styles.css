@@ -2150,11 +2150,325 @@ h6 {
         font-size: 36px;
     }
 }
-/* Final Mobile Overrides */
-@media (max-width: 576px) {
-    .gallery-main { height: 320px; }
-    .benefit-card { padding: 30px 20px; }
-    .trust-icons { gap: 15px; }
-    .trust-icon-item { font-size: 11px; }
-    .hero-main-img { max-width: 280px; }
+/* ======================================================== */
+/* 📱 PERFECT MOBILE REDESIGN (APPLE / HIGH-END E-COMMERCE) */
+/* ======================================================== */
+
+@media (max-width: 768px) {
+    /* 1. Global & Typography */
+    html, body {
+        overflow-x: hidden;
+        width: 100%;
+        font-size: 15px; /* Better readability */
+        -webkit-text-size-adjust: 100%;
+    }
+    
+    .container {
+        padding: 0 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* 2. Sleek Buttons (Apple Style) */
+    .btn {
+        padding: 16px 24px;
+        font-size: 15px;
+        font-weight: 700;
+        width: 100%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 12px; /* Smoother rounding */
+        box-shadow: 0 4px 15px rgba(112, 195, 69, 0.2);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        -webkit-tap-highlight-color: transparent;
+        box-sizing: border-box;
+    }
+    .btn:active {
+        transform: scale(0.97);
+    }
+    .cta-buttons {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+    }
+
+    /* 3. Navigation Bar (Glassmorphism) */
+    .header {
+        padding: 12px 0;
+        background: rgba(5, 20, 5, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .logo-icon { height: 32px; }
+    .mobile-menu-toggle { padding: 10px; }
+    .mobile-menu-toggle span { width: 24px; height: 2px; margin-bottom: 5px; background: #fff; }
+
+    /* 4. Hero Section */
+    .hero {
+        min-height: 100vh;
+        padding-top: 80px;
+        padding-bottom: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .hero-content {
+        flex-direction: column;
+        gap: 0;
+        padding: 0;
+        text-align: center;
+        width: 100%;
+        margin: 0;
+    }
+    .bottle-container, .bottle-container.animate {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px 0 30px;
+        animation: floatMobile 4s ease-in-out infinite;
+    }
+    @keyframes floatMobile {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    .bottle-image {
+        width: auto;
+        height: 40vh; /* Scaled perfectly to screen height */
+        max-height: 350px;
+        filter: drop-shadow(0 20px 40px rgba(112, 195, 69, 0.4));
+    }
+    
+    .product-details, .product-details.animate {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        transform: none !important;
+        width: 100%;
+        max-width: 100%;
+        padding: 0 20px;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+    }
+
+    /* 5. Typography Polish */
+    .product-tag {
+        font-size: 9px;
+        padding: 6px 14px;
+        border-radius: 20px;
+        background: rgba(112, 195, 69, 0.15);
+        color: var(--primary-green);
+        border: 1px solid rgba(112, 195, 69, 0.3);
+        margin-bottom: 16px;
+        display: inline-block;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+    }
+    .product-title {
+        font-size: clamp(2.2rem, 8vw, 2.8rem);
+        line-height: 1.1;
+        margin-bottom: 16px;
+    }
+    .product-description {
+        font-size: 15px;
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 24px;
+    }
+    .section-title { font-size: 2rem; margin-bottom: 30px; }
+    .page-title { font-size: 2.2rem; }
+
+    /* 6. Features Grid (Modern Badges) */
+    .product-features, .product-info-features {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 20px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        margin-bottom: 24px;
+    }
+    .product-features li, .product-info-features li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 14px;
+        font-weight: 500;
+        margin: 0;
+    }
+    .feature-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+        background: rgba(112, 195, 69, 0.2);
+        color: var(--primary-green);
+    }
+
+    /* 7. Premium Pricing Display */
+    .pricing {
+        margin-bottom: 24px;
+        background: linear-gradient(135deg, rgba(112, 195, 69, 0.1) 0%, rgba(112, 195, 69, 0.02) 100%);
+        padding: 16px;
+        border-radius: 16px;
+        border: 1px solid rgba(112, 195, 69, 0.2);
+    }
+    .price-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-bottom: 8px;
+    }
+    .current-price {
+        font-size: 2.5rem;
+        font-weight: 800;
+    }
+    .original-price {
+        font-size: 1.3rem;
+    }
+    .discount-badge {
+        font-size: 11px;
+        padding: 5px 10px;
+        border-radius: 8px;
+        transform: translateY(-2px);
+    }
+
+    /* 8. Sections Spacing */
+    .section { padding: 60px 0; }
+    .product-layout { flex-direction: column; gap: 30px; text-align: center; }
+    .product-info-container { max-width: 100%; }
+    .contact-layout { grid-template-columns: 1fr; gap: 30px; }
+    .about-features-grid { grid-template-columns: 1fr; gap: 20px; }
+
+    /* 9. Timeline Perfected */
+    .timeline { padding: 0; margin-top: 20px; }
+    .timeline::before { left: 24px; width: 2px; background: rgba(112, 195, 69, 0.2); }
+    .timeline-item {
+        padding-left: 70px !important;
+        padding-right: 0 !important;
+        text-align: left !important;
+        margin-bottom: 30px;
+        transform: none; 
+        opacity: 1;
+    }
+    .timeline-dot {
+        left: 24px;
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+        box-shadow: 0 0 15px rgba(112, 195, 69, 0.4);
+    }
+    .timeline-content {
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+    }
+    .timeline-content h3 { font-size: 1.25rem; margin-bottom: 8px; }
+    .timeline-content p { font-size: 14px; color: rgba(255,255,255,0.7); }
+
+    /* 10. Forms & Inputs */
+    .form-input, .form-textarea {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        padding: 16px;
+        font-size: 15px;
+        -webkit-appearance: none; /* iOS Reset */
+    }
+    .form-input:focus, .form-textarea:focus {
+        border-color: var(--primary-green);
+        background: rgba(112, 195, 69, 0.05);
+    }
+    .contact-form-container {
+        padding: 30px 20px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* 11. Product Image Gallery */
+    .pdp-hero { padding: 100px 0 40px; }
+    .pdp-hero-grid { display: flex; flex-direction: column-reverse; gap: 30px; text-align: center; }
+    .pdp-hero-title { font-size: 2.2rem; }
+    .gallery-main { height: 65vw; max-height: 400px; background: rgba(255,255,255,0.02); border-radius: 20px; padding: 20px; }
+    .gallery-nav { padding: 15px 0; gap: 10px; }
+    .gallery-thumb { flex: 0 0 70px; height: 70px; border-radius: 12px; }
+
+    /* 12. Offer Card */
+    .offer-card {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 40px 20px;
+        text-align: center;
+        border-radius: 24px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(112, 195, 69, 0.08) 100%);
+    }
+    .stock-tag { padding: 10px 16px; font-size: 11px; border-radius: 8px; }
+
+    /* 13. Sticky Buy Bar (Apple Pay Style Bottom Bar) */
+    .sticky-buy-bar {
+        padding: 15px 20px 25px; /* Extra bottom padding for iPhone indicator */
+        background: rgba(10, 10, 10, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .sticky-flex {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .sticky-product-info img { height: 44px; background: rgba(255,255,255,0.05); border-radius: 8px; padding: 4px; }
+    .sticky-product-info strong { font-size: 15px; font-weight: 700; display: block; }
+    .sticky-product-info span { font-size: 12px; color: var(--text-gray); }
+    .sticky-buy-bar .btn {
+        width: auto;
+        margin: 0;
+        padding: 12px 24px;
+        border-radius: 30px; /* Pill shape */
+        font-size: 14px;
+        box-shadow: 0 4px 15px rgba(112, 195, 69, 0.3);
+        display: inline-block;
+    }
+
+    /* 14. Footer */
+    .footer { padding: 60px 0 40px; }
+    .footer-content { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+    .footer-logo-container { display: flex; flex-direction: column; align-items: center; }
+    .social-links { justify-content: center; }
+    .social-link { width: 44px; height: 44px; border-radius: 12px; }
+    .newsletter-input { padding: 16px; border-radius: 12px; }
+
+    /* Trust Icons & Table */
+    .comparison-table th, .comparison-table td { padding: 12px 10px; font-size: 0.85rem; }
+    .trust-icons { gap: 15px; justify-content: center; }
+    .trust-icon-item { font-size: 0.8rem; flex-direction: column; text-align: center; gap: 8px; }
+    .trust-icon-item i { font-size: 1.4rem; }
+    
+    /* FAQ */
+    .faq-question { padding: 18px 20px; }
+    .faq-question h3 { font-size: 1.15rem; }
+    .faq-answer p { padding: 0 20px 18px; font-size: 0.95rem; }
+}
+
+@media (max-width: 400px) {
+    /* Micro-adjustments for very small phones like iPhone SE */
+    .product-title { font-size: 2rem; }
+    .current-price { font-size: 2.2rem; }
+    .btn { padding: 14px 20px; font-size: 14px; }
+    .bottle-image { height: 35vh; }
 }
